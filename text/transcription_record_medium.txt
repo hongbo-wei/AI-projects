@@ -1,0 +1,10 @@
+Hello, this is Bruce. I'm testing our...
+See how well the Whisperer can automatically generate the transcription.
+between capturing audio and displaying transcription. Secondly,
+the transcription to see the word error rate.
+Thank you.
+Hello, this is Bruce.
+text program. Let's see how well the Whisperer can automatically
+Firstly, record the latency time between capture and capture.
+Secondly, we compare the input text with the transcription text.
+Testing completed

@@ -4,8 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+pyaudio = "*"
+numpy = "*"
+openai-whisper = "*"
+pandas = "*"
+streamlit = "*"
+pyaudioanalysis = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.11"
+python_full_version = "3.11.0"

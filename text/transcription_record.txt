@@ -1,0 +1,12 @@
+Hello, this is Bruce.
+I'm testing our speech to text program.
+Let's see how well the whisper can automatically generate the transcription.
+First, we recorded an latency time between capturing audio and display.
+description. Secondly we compare the input text with a
+to say the word error rate testing complete
+Hello, this is Bruce. I'm testing our
+to text program. Let's see how the whisper can automatically
+the transcription. Firstly, we record the latency time within capturing
+and displaying transcription. Secondly, we compare the impact of the image.
+with the transcription to see the ward arrow rate.
+Testing completed.

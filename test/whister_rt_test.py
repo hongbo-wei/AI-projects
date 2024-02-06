@@ -13,7 +13,7 @@ import whisper
 import pyaudio
 import wave
 import threading
-import ffmpeg
+# import ffmpeg
 import numpy as np
 import subprocess
 import streamlit as st
