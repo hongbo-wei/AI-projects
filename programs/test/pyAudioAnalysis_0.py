@@ -1,10 +1,11 @@
-import whisper # for real-time transcription
-import pyaudio # for audio input
-import threading # for synchronization
+from pyAudioAnalysis import audioSegmentation
+import pyaudio
 import numpy as np
-import time
-from datetime import datetime
+import threading
+import whisper # for real-time transcription
 
+
+# Configurations
 # Essential parameters for audio and model
 FORMAT = pyaudio.paFloat32
 CHANNELS = 1
@@ -12,14 +13,16 @@ RATE = 16000  # Whisper's required sample rate
 CHUNK = 1024
 
 mutex = threading.Lock()
-queue = np.ndarray([], dtype=np.float32)
+queue = np.array([], dtype=np.float32)
 n_batch_samples = 5 * RATE
-max_queue_size = 3 * n_batch_samples
-start_time = None
 update_event = threading.Event()  # Event for synchronization
 
-latency_record = "text/latency_record.txt"
-transcription_record = "text/transcription_record.txt"
+# Open files outside the main loop
+dialogue = "text/dialogue_output.txt"  # File to record the output with timestamp
+
+# Initialize PyAudioAnalysis parameters
+model_type = "knn"  # You can choose the classification model type
+n_speakers = 2  # Assuming there are two speakers: doctor and patient
 
 def get_microphone_device_index(device_name, host_api_index=0):
     info = audio.get_host_api_info_by_index(host_api_index)
@@ -31,41 +34,52 @@ def get_microphone_device_index(device_name, host_api_index=0):
             return i
     return None
 
+
+# Function to perform speech diarization
+def perform_speech_diarization(samples, rate):
+    segments = audioSegmentation.speaker_diarization(samples, rate, n_speakers)
+    return segments
+
+
+# Modify the process_audio_chunk function to include speech diarization
 def process_audio_chunk(in_data, frame_count, time_info, status):
-    global queue, start_time
-    transcript = ""
+    global queue, start_time, current_speaker
     chunk = np.frombuffer(in_data, dtype=np.float32)
     
     with mutex:
         queue = np.append(queue, chunk)
         
     if queue.size >= n_batch_samples:
-        if start_time is None:
-            start_time = time.time()  # Record the start time
-            
         samples = queue[:n_batch_samples]
         queue = queue[n_batch_samples:]
         
-        text = model.transcribe(samples)
-        transcript = text["text"].strip()
-        print(transcript)  # Print the transcribed text
-
-        # Calculate the latency
-        end_time = time.time()
-        latency = end_time - start_time
-        latency_record_file.write(f"{latency:.2f}\n")
-
-        # record the transcription
-        transcription_record_file.write(f"{transcript}\n")
-
-        start_time = None  # Reset the start time
-        update_event.set()  # Set the event to signal an update
+        # Perform speech diarization
+        segments = perform_speech_diarization(samples, RATE)
+        
+        # Iterate over speaker segments and transcribe each segment
+        for segment in segments:
+            start, end, label = segment
+            segment_samples = samples[start:end]
+            text = model.transcribe(segment_samples)
+            transcript = text["text"].strip()
+            print(f"{label.capitalize()} says: {transcript}")
+            
+            # Record the conversation with speaker labels
+            if label == 0:  # Assuming doctor is labeled as 0
+                doctor_conversation.append(transcript)
+            else:
+                patient_conversation.append(transcript)
     
     return None, pyaudio.paContinue
 
+# Define doctor and patient conversation lists
+doctor_conversation = []
+patient_conversation = []
+
 if __name__ == "__main__":
+    # Initialize PyAudio and other parameters
     audio = pyaudio.PyAudio()
-    # adjust the model accoding to requets
+        # adjust the model accoding to requets
     model_size = "base.en"
     model = whisper.load_model(model_size)
 
@@ -83,17 +97,22 @@ if __name__ == "__main__":
                             frames_per_buffer=CHUNK,
                             input_device_index=mic_device_index,
                             stream_callback=process_audio_chunk)
-        
+    
         try:
-            latency_record_file = open(latency_record, 'a')
-            transcription_record_file = open(transcription_record, 'a')
-
+            # Other code...
+            dialogue_file = open(dialogue, 'a')
             stream.start_stream()  # Start the audio stream
             print("Starting real-time speaker diarization...")
             print("Please start speaking...")
-
             while stream.is_active():
-                update_event.wait(timeout=0.01)  # Wait for the event to be set or timeout
+                update_event.wait(timeout=0.01)
+                
+            # After transcription stopped, save the conversation
+            with open("doctor_conversation.txt", "w") as f:
+                f.write("\n".join(doctor_conversation))
+            with open("patient_conversation.txt", "w") as f:
+                f.write("\n".join(patient_conversation))
+                
         except KeyboardInterrupt:
             stream.stop_stream()
             stream.close()
@@ -101,17 +120,7 @@ if __name__ == "__main__":
             print("\nTranscription stopped.")
 
             # Close files
-            latency_record_file.close()
-            transcription_record_file.close()
+            dialogue_file.close()
 
         except FileNotFoundError as e:
             print(f"Error: {e}")
-
-'''
-Hello, this is Bruce.
-I'm testing our speech to text program.
-Let's see how well the Whisper can automatically generate the transcription. 
-Firstly, we record the latency time between capturing audio and displaying transcription.
-Secondly, we compare the input text with the transcription to see the word error rate.
-Testing completed.
-'''

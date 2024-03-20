@@ -10,3 +10,4 @@ the transcription. Firstly, we record the latency time within capturing
 and displaying transcription. Secondly, we compare the impact of the image.
 with the transcription to see the ward arrow rate.
 Testing completed.
+Hey, what's up? How are you doing?
