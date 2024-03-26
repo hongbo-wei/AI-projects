@@ -14,8 +14,6 @@ FORMAT = pyaudio.paFloat32
 CHANNELS = 1
 RATE = 16000  # Whisper's required sample rate
 CHUNK = 1024
-RECORD_SECONDS = 5
-WAVE_OUTPUT_FILENAME = "output.wav"
 
 mutex = threading.Lock()
 queue = np.ndarray([], dtype=np.float32)
@@ -25,6 +23,10 @@ start_time = None
 update_event = threading.Event()  # Event for synchronization
 
 transcription_record = "text/dialogue.txt"
+
+# for audio recording
+RECORD_SECONDS = 5
+WAVE_OUTPUT_FILENAME = "output.wav"
 
 def process_audio_chunk(in_data, frame_count, time_info, status):
     global queue, start_time, audio_segment_count
@@ -48,6 +50,19 @@ def process_audio_chunk(in_data, frame_count, time_info, status):
         update_event.set()  # Set the event to signal an update
     
     return None, pyaudio.paContinue
+
+
+def record_audio():
+    global queue, recordings_counter
+    print(f"Recording audio")
+    with sf.SoundFile(WAVE_OUTPUT_FILENAME, mode='x', samplerate=RATE, channels=CHANNELS) as file:
+        for _ in range(int(RECORD_SECONDS * RATE / CHUNK)):
+            data = queue[:CHUNK]
+            queue = queue[CHUNK:]
+            file.write(data)
+            if len(queue) < CHUNK:
+                break
+
 
 if __name__ == "__main__":
     audio = pyaudio.PyAudio()
@@ -77,6 +92,12 @@ if __name__ == "__main__":
             print("Please start speaking...")
 
             while stream.is_active():
+                # time.sleep(0.01)  # Introduce a short delay before acquiring the mutex
+                # with mutex:
+                #     if transcript:
+                #         print(transcript)
+                #         transcript = ""  # Clear the transcript after printing
+
                 update_event.wait(timeout=0.01)  # Wait for the event to be set or timeout
         
         except KeyboardInterrupt:
