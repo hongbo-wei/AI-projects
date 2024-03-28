@@ -1,6 +1,6 @@
 from audio_record import record_audio
 from extract_audio_segment import extract_audio_segment
-from speaker_diarization_pyannote import online_diarization
+from speaker_diarization import online_diarization
 import whisper
 
 
@@ -14,7 +14,7 @@ def transcribe_audio(audio_file):
     returns:
         transcript (str): the transcribed text
     """
-    model = whisper.load_model("base")
+    model = whisper.load_model("base.en")
     transcript = model.transcribe(audio_file)
     return transcript["text"].strip()
 
@@ -29,15 +29,14 @@ def output_transcript(speaker_segments, output_file="text/dialogue.csv"):
     returns:
         None
     """
-    print("Writing speaker-specific segments to a CSV file...")
     with open(output_file, "a") as dialogue:
         # Extract the speaker-specific segments
+        print("Extracting audio segment")
         for speaker, segment in speaker_segments.items():
             start_seconds = segment["start_seconds"]
             end_seconds = segment["end_seconds"]
             output_audio = f"audio/extracted_segment_{speaker}.wav"
             extract_audio_segment(audio_file, start_seconds, end_seconds, output_audio)
-            print("Extraction completed.")
             transcript = transcribe_audio(output_audio)
 
             # Write the speaker, date, start time, end time, and transcript to a CSV file
@@ -46,7 +45,7 @@ def output_transcript(speaker_segments, output_file="text/dialogue.csv"):
             end_timestamp = segment["end_timestamp"]
             dialogue.write(f'\n{speaker},{date},{start_timestamp},{end_timestamp},"{transcript}"')
             
-        print("Speaker diarization and speech-to-text completed.")
+        print("Save speaker-specific segments to a CSV file")
 
 
 if __name__ == "__main__":

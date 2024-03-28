@@ -33,6 +33,7 @@ def record_audio():
     # Save as WAV file
     wavio.write(audio_file, data, freq, sampwidth=2)
     
+    print("Audio recorded")
     return audio_file
 
 if __name__ == "__main__":

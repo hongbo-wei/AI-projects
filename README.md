@@ -1,12 +1,14 @@
-# Setup
-We used Python 3.9.9 and PyTorch 1.10.1 to train and test our models, but the codebase is expected to be compatible with Python 3.8-3.11 and recent PyTorch versions. The codebase also depends on a few Python packages, most notably OpenAI's tiktoken for their fast tokenizer implementation. You can download and install (or update to) the latest release of Whisper with the following command:
+# Set up
+As describe by [OpenAI](https://github.com/openai/whisper), Whisper is expected to be compatible with Python 3.8-3.11 and recent PyTorch versions.
 
-    pip install -U openai-whisper
-
-# Activate Virtual Environment
+## Activate virtual environment
     pipenv shell
+    pipenv install
 
-# Available models and languages
+### Run the program
+<span style="color:red">programs/main/speech_to_text_speaker_diarization.py</span>
+
+#### Available models and languages
 
 |  Size  | Parameters | English-only model | Multilingual model | Required VRAM | Relative speed |
 |:------:|:----------:|:------------------:|:------------------:|:-------------:|:--------------:|
