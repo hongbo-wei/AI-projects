@@ -1,5 +1,4 @@
-speakers,date,start_time,stop_time
-SPEAKER_00,2024-02-28,13:43:49,13:43:53
-SPEAKER_01,2024-02-28,13:43:55,13:43:58
-SPEAKER_00,2024-02-28,15:54:46,15:54:50
-SPEAKER_01,2024-02-28,15:54:52,15:54:55
+
+SPEAKER_00,2024-03-28,17:40:19,17:40:23,"Hey, this is Bruce, I'm testing on my program. Hey."
+SPEAKER_01,2024-03-28,17:40:23,17:40:27,"It's fairies, I'm the new machine, the new, how you doing?"
+SPEAKER_00,2024-03-28,17:40:40,17:40:43,"Eat foods and study machine learning."

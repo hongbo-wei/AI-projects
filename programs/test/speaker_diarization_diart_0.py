@@ -3,7 +3,7 @@ import whisper
 from pyannote.audio import Pipeline
 import sounddevice as sd
 
-from config import HUGGINGFACE_HUB_TOKEN  # Import from config file
+from programs.main.config import HUGGINGFACE_HUB_TOKEN  # Import from config file
 
 from diart import SpeakerDiarization
 from diart.sources import MicrophoneAudioSource
