@@ -3,7 +3,7 @@ import wavio
 import time
 
 # Set recording parameters
-duration = 10  # seconds
+duration = 15  # seconds
 freq = 44100  # sampling rate
 
 # Print available devices (optional)

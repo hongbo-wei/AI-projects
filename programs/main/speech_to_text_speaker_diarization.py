@@ -1,6 +1,6 @@
 from audio_record import record_audio
 from extract_audio_segment import extract_audio_segment
-from speaker_diarization import online_diarization
+from speaker_diarization import speaker_diarization
 import whisper
 
 
@@ -55,9 +55,11 @@ if __name__ == "__main__":
             print("-" * 20)
             audio_file = record_audio()
             # audio_file = "audio/test_speech_diarization.wav"
-            speaker_segments = online_diarization(audio_file)
+            speaker_segments = speaker_diarization(audio_file)
             output_transcript(speaker_segments)
         except KeyboardInterrupt:
             print("\nSpeech-to-text and speaker diarization stopped")
             break
-        
+
+# Hi, this is Bruce, I'm testing my program
+# Hi Bruce, this is Arnaz, I'm testing my program too

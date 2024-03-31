@@ -4,7 +4,7 @@ import time
 import json
 
 
-def online_diarization(audio_file, window_duration=1.0, step_duration=0.5):
+def speaker_diarization(audio_file, window_duration=1.0, step_duration=0.5):
     """
     This function performs speaker diarization using a sliding window approach.
 
@@ -65,7 +65,7 @@ def online_diarization(audio_file, window_duration=1.0, step_duration=0.5):
 
 if __name__ == "__main__":
     audio_file = "audio/test_speech_diarization.wav"
-    speaker_segments = online_diarization(audio_file)
+    speaker_segments = speaker_diarization(audio_file)
     print(speaker_segments)
 
     # for speaker, segments in audio_segments.items():
