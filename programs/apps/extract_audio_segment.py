@@ -30,15 +30,15 @@ def extract_audio_segment(input_file, start_time, end_time, output_file):
 if __name__ == "__main__":
     # Save the segment as a new wav file
     input_file = 'audio/test_speech_diarization.wav'
-    output_file = "audio/extracted_segment_SPEAKER_00.wav"
+    output_file = "audio/SPEAKER_00.wav"
 
     # Define start and end time in seconds (multiply by 1000 for milliseconds)
-    start_time = 0.78
-    end_time = 4.88
+    start_time = 1.34
+    end_time = 4.62
 
     extract_audio_segment(input_file, start_time, end_time, output_file)
 
-    start_time = 6.32
-    end_time = 9.51
-    output_file = "audio/extracted_segment_SPEAKER_01.wav"
+    start_time = 6.2
+    end_time = 7.47
+    output_file = "audio/SPEAKER_01.wav"
     extract_audio_segment(input_file, start_time, end_time, output_file)

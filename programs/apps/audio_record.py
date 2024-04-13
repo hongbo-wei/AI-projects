@@ -2,17 +2,13 @@ import sounddevice as sd
 import wavio
 import time
 
-# Set recording parameters
-duration = 15  # seconds
-freq = 44100  # sampling rate
-
 # Print available devices (optional)
 # print(sd.query_devices())
 
 # Choose the input device (optional, modify index if needed)
 # device = sd.query_devices()[0]
 
-def record_audio():
+def record_audio(duration=10, freq=44100):
     """
     Reocrd audio from the microphone and save it as a .wav file.
 
@@ -28,8 +24,9 @@ def record_audio():
     print("Recording audio...")
     data = sd.rec(int(duration * freq), samplerate=freq, channels=1, blocking=True)
 
-    timestamp = time.strftime("%Y-%m-%d_%H:%M:%S")
-    audio_file = f"audio/recording_{timestamp}.wav"
+    # timestamp = time.strftime("%Y-%m-%d_%H:%M:%S")
+    # audio_file = f"audio/audio_record_{timestamp}.wav"
+    audio_file = f"audio/audio_record.wav"
     # Save as WAV file
     wavio.write(audio_file, data, freq, sampwidth=2)
     

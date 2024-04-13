@@ -6,9 +6,13 @@ As describe by [OpenAI](https://github.com/openai/whisper), Whisper is expected 
     pipenv install
 
 ### Run the program
-<span style="color:red">programs/main/speech_to_text_speaker_diarization.py</span>
+<span style="color:red">programs/apps/main.py</span>
 
 #### Available models and languages
+
+install the library of Whisper by OpenAI (should be included in `pipenv install`)
+
+    pip install -U openai-whisper
 
 |  Size  | Parameters | English-only model | Multilingual model | Required VRAM | Relative speed |
 |:------:|:----------:|:------------------:|:------------------:|:-------------:|:--------------:|

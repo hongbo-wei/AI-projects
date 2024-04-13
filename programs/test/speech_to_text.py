@@ -6,7 +6,7 @@ import threading  # for synchronization
 import whisper  # for real-time transcription
 
 from datetime import datetime
-from audio_processing import get_microphone_device_index
+from programs.test.audio_processing import get_microphone_device_index
 
 
 # configuration
