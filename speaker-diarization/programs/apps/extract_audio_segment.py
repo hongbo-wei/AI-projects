@@ -14,7 +14,7 @@ def extract_audio_segment(input_file, start_time, end_time, output_file):
         None 
     """
     # Load the audio file
-    audio_file = AudioSegment.from_wav(input_file)
+    audio_file = AudioSegment.from_file(input_file)
 
     # Define start and end time in seconds (multiply by 1000 for milliseconds)
     start_time = start_time * 1000

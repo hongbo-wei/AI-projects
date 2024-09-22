@@ -19,6 +19,7 @@ streamlit = "*"
 torchvision = "*"
 wavio = "*"
 "pyannote.audio" = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
