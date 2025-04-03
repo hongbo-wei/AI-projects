@@ -1,1 +1,3 @@
 speaker-diarization/.env
+rag-chatbot/myenv
+deepseek-crawl-x/venv
