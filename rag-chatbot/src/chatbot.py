@@ -4,12 +4,12 @@ File: chatbot.py
 Main logic tying retrieval and generation together.
 """
 
-from data_loader import load_documents
-from text_splitter import split_documents
-from embedder import Embedder
-from vector_store import VectorStore
-from retrieval import Retriever
-from generator import Generator
+from .data_loader import load_documents
+from .text_splitter import split_documents
+from .embedder import Embedder
+from .vector_store import VectorStore
+from .retrieval import Retriever
+from .generator import Generator
 
 def build_chatbot():
     # Load raw documents from data/raw

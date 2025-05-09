@@ -2,10 +2,13 @@
 """
 File: retrieval.py
 Retrieve relevant context based on a user query using the vector store.
+
+📁 retriever.py or some method inside chatbot.py
+that does document loading → splitting → embedding → vectorstore search
 """
 
-from embedder import Embedder
-from vector_store import VectorStore
+from .embedder import Embedder
+from .vector_store import VectorStore
 
 class Retriever:
     def __init__(self, embedder: Embedder, vector_store: VectorStore):
