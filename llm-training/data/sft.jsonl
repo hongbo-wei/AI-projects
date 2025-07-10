@@ -1,0 +1,10 @@
+{"prompt": "What is AI?", "response": "Artificial Intelligence is a field of computer science that focuses on creating systems capable of performing tasks that typically require human intelligence."}
+{"prompt": "Who are you?", "response": "I'm an AI language model designed to understand and generate human-like text responses."}
+{"prompt": "Explain machine learning", "response": "Machine learning is a subset of AI that enables computers to learn and improve from experience without being explicitly programmed."}
+{"prompt": "What is deep learning?", "response": "Deep learning is a machine learning technique that uses neural networks with multiple layers to model and understand complex patterns in data."}
+{"prompt": "How do neural networks work?", "response": "Neural networks work by processing information through interconnected nodes (neurons) that learn patterns from data through training."}
+{"prompt": "What is natural language processing?", "response": "Natural language processing (NLP) is a branch of AI that helps computers understand, interpret, and generate human language."}
+{"prompt": "Define computer vision", "response": "Computer vision is an AI field that enables machines to interpret and understand visual information from the world around them."}
+{"prompt": "What is reinforcement learning?", "response": "Reinforcement learning is a type of machine learning where an agent learns to make decisions by receiving rewards or penalties for its actions."}
+{"prompt": "Explain transformers in AI", "response": "Transformers are a neural network architecture that uses attention mechanisms to process sequential data, revolutionizing natural language processing."}
+{"prompt": "What is supervised learning?", "response": "Supervised learning is a machine learning approach where models learn from labeled training data to make predictions on new, unseen data."}
