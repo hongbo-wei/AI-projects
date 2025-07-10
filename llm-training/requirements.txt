@@ -1,0 +1,11 @@
+# Core dependencies for LLM training pipeline
+torch>=1.11.0
+transformers>=4.20.0
+datasets>=2.0.0
+
+# Additional utilities
+numpy>=1.21.0
+tqdm>=4.62.0
+
+# For RAG functionality
+faiss-cpu>=1.7.2
