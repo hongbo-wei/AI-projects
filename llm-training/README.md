@@ -223,6 +223,41 @@ print(response[0]['generated_text'])
 - Use gradient accumulation for larger effective batch sizes
 - Monitor training with TensorBoard logs
 
+## 🗺️ LLM三阶段训练流程图
+
+```mermaid
+flowchart LR
+    %% 数据准备
+    A1[pretrain.txt<br/>无监督文本]:::data1
+    A2[sft.jsonl<br/>指令对话]:::data2
+    A3[rag.jsonl<br/>知识问答]:::data3
+
+    %% 阶段
+    B[CPT 预训练<br/>BERT + MLM]:::stage
+    C[output/cpt/<br/>CPT模型]:::output
+    D[SFT 微调<br/>GPT-2 + 指令]:::stage
+    E[output/sft/<br/>SFT模型]:::output
+    F[RAG 检索增强<br/>RAG-sequence-nq]:::stage
+    G[output/rag/<br/>RAG模型]:::output
+
+    %% 连接
+    A1 --> B --> C --> D --> E --> F --> G
+    A2 --> D
+    A3 --> F
+
+    %% 样式
+    classDef data1 fill:#ffb3ba,stroke:#fff,stroke-width:2px,color:#222,font-weight:bold;
+    classDef data2 fill:#bae1ff,stroke:#fff,stroke-width:2px,color:#222,font-weight:bold;
+    classDef data3 fill:#baffc9,stroke:#fff,stroke-width:2px,color:#222,font-weight:bold;
+    classDef stage fill:#222,stroke:#fff,stroke-width:2px,color:#ffe066,font-size:16px,font-weight:bold;
+    classDef output fill:#444,stroke:#ffe066,stroke-width:2px,color:#ffe066,font-weight:bold;
+    class A1 data1;
+    class A2 data2;
+    class A3 data3;
+    class B,D,F stage;
+    class C,E,G output;
+```
+
 ## 📚 References
 
 - [Hugging Face Transformers](https://huggingface.co/transformers/)
