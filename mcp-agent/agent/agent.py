@@ -95,6 +95,16 @@ class AdvertisingAgent:
                     "target_audience": "Target audience description (string)"
                 }
             }
+            ,
+            "var_image_generator": {
+                "description": "Generate advertising images from text prompts (VAR)",
+                "parameters": {
+                    "prompt": "Text prompt describing the desired ad image (string)",
+                    "width": "Image width in pixels (int, optional)",
+                    "height": "Image height in pixels (int, optional)",
+                    "style": "Optional visual style (string, optional)"
+                }
+            }
         }
 
     async def initialize_mcp_client(self):

@@ -29,6 +29,12 @@ def create_mcp_server() -> FastMCP:
         """Check advertising content compliance with regional regulations."""
         return TOOL_EXECUTORS["compliance_checker"](platform=platform, region=region, ad_content=ad_content, target_audience=target_audience)
 
+    @server.tool()
+    def var_image_generator(prompt: str, width: int = 1024, height: int = 1024, style: str | None = None):
+        """Generate advertising images from text prompts (VAR) using the registered executor."""
+        # Delegate to executor
+        return TOOL_EXECUTORS["var_image_generator"](prompt=prompt, width=width, height=height, style=style)
+
     return server
 
 
@@ -94,6 +100,9 @@ class StdioMCPServer(MCPServerInterface):
 
     async def handle_request(self, request: Dict[str, Any]) -> Dict[str, Any]:
         """Handle tool execution request."""
+        import concurrent.futures
+        import asyncio
+
         try:
             tool_name = request.get("tool")
             tool_args = request.get("args", {})
@@ -101,11 +110,20 @@ class StdioMCPServer(MCPServerInterface):
             if tool_name not in self.executors:
                 return {
                     "error": f"Tool '{tool_name}' not found",
-                    "available_tools": list(self.executors.keys())
+                    "available_tools": list(self.executors.keys()),
+                    "status": "error"
                 }
 
-            # Execute tool using the executor function
-            result = self.executors[tool_name](**tool_args)
+            executor_fn = self.executors[tool_name]
+
+            # Run synchronous executor in a thread pool with timeout
+            loop = asyncio.get_running_loop()
+            with concurrent.futures.ThreadPoolExecutor() as pool:
+                task = loop.run_in_executor(pool, lambda: executor_fn(**tool_args))
+                try:
+                    result = await asyncio.wait_for(task, timeout=30.0)
+                except asyncio.TimeoutError:
+                    return {"tool": tool_name, "error": "tool_execution_timeout", "status": "error"}
 
             return {
                 "tool": tool_name,
@@ -162,6 +180,9 @@ class SSEMCPServer(MCPServerInterface):
 
     async def handle_request(self, request: Dict[str, Any]) -> Dict[str, Any]:
         """Handle tool execution request."""
+        import concurrent.futures
+        import asyncio
+
         try:
             tool_name = request.get("tool")
             tool_args = request.get("args", {})
@@ -169,11 +190,18 @@ class SSEMCPServer(MCPServerInterface):
             if tool_name not in self.executors:
                 return {
                     "error": f"Tool '{tool_name}' not found",
-                    "available_tools": list(self.executors.keys())
+                    "available_tools": list(self.executors.keys()),
+                    "status": "error"
                 }
 
-            # Execute tool using the executor function
-            result = self.executors[tool_name](**tool_args)
+            executor_fn = self.executors[tool_name]
+            loop = asyncio.get_running_loop()
+            with concurrent.futures.ThreadPoolExecutor() as pool:
+                task = loop.run_in_executor(pool, lambda: executor_fn(**tool_args))
+                try:
+                    result = await asyncio.wait_for(task, timeout=30.0)
+                except asyncio.TimeoutError:
+                    return {"tool": tool_name, "error": "tool_execution_timeout", "status": "error"}
 
             return {
                 "tool": tool_name,
@@ -226,6 +254,9 @@ class StreamableHTTPMCPServer(MCPServerInterface):
 
     async def handle_request(self, request: Dict[str, Any]) -> Dict[str, Any]:
         """Handle tool execution request."""
+        import concurrent.futures
+        import asyncio
+
         try:
             tool_name = request.get("tool")
             tool_args = request.get("args", {})
@@ -233,11 +264,18 @@ class StreamableHTTPMCPServer(MCPServerInterface):
             if tool_name not in self.executors:
                 return {
                     "error": f"Tool '{tool_name}' not found",
-                    "available_tools": list(self.executors.keys())
+                    "available_tools": list(self.executors.keys()),
+                    "status": "error"
                 }
 
-            # Execute tool using the executor function
-            result = self.executors[tool_name](**tool_args)
+            executor_fn = self.executors[tool_name]
+            loop = asyncio.get_running_loop()
+            with concurrent.futures.ThreadPoolExecutor() as pool:
+                task = loop.run_in_executor(pool, lambda: executor_fn(**tool_args))
+                try:
+                    result = await asyncio.wait_for(task, timeout=30.0)
+                except asyncio.TimeoutError:
+                    return {"tool": tool_name, "error": "tool_execution_timeout", "status": "error"}
 
             return {
                 "tool": tool_name,

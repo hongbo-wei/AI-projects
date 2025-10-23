@@ -36,8 +36,16 @@ class StdioMCPClient(MCPClientInterface):
 
     async def start_server(self):
         """Start the stdio server process."""
+        # Accept either a list of args or a string command. Prefer list for safety.
+        cmd = self.server_command
+        if isinstance(cmd, str):
+            # Default to using main.py entrypoint if a simple string was provided
+            # Split into args for Popen
+            import shlex
+            cmd = shlex.split(cmd)
+
         self.process = subprocess.Popen(
-            self.server_command,
+            cmd,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,

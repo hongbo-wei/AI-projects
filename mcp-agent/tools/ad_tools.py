@@ -302,12 +302,11 @@ COMPLIANCE_CHECKER_TOOL = Tool(
     }
 )
 
-# Tool registry
+# Canonical tool registry and executor mapping
 AD_TOOLS = [
     BUDGET_CALCULATOR_TOOL,
     EFFECT_ANALYZER_TOOL,
     COMPLIANCE_CHECKER_TOOL,
-    # Visual Autoregressive Modeling tool for ad image generation
     Tool(
         name="var_image_generator",
         description="Generate advertising images from text prompts (Visual Autoregressive Modeling)",
@@ -325,37 +324,6 @@ AD_TOOLS = [
 ]
 
 # Tool execution mapping
-TOOL_EXECUTORS = {
-    "budget_calculator": budget_calculator_tool,
-    "effect_analyzer": effect_analyzer_tool,
-    "compliance_checker": compliance_checker_tool
-}
-
-# Register VAR executor
-TOOL_EXECUTORS["var_image_generator"] = var_image_tool
-
-# Tool registry
-AD_TOOLS = [
-    BUDGET_CALCULATOR_TOOL,
-    EFFECT_ANALYZER_TOOL,
-    COMPLIANCE_CHECKER_TOOL,
-    Tool(
-        name="var_image_generator",
-        description="Generate advertising images from text prompts (Visual Autoregressive Modeling)",
-        inputSchema={
-            "type": "object",
-            "properties": {
-                "prompt": {"type": "string", "description": "Text prompt describing the desired ad image"},
-                "width": {"type": "integer", "description": "Image width in pixels"},
-                "height": {"type": "integer", "description": "Image height in pixels"},
-                "style": {"type": "string", "description": "Optional visual style"}
-            },
-            "required": ["prompt"]
-        }
-    )
-]
-
-# Tool execution mapping (ensure VAR executor present)
 TOOL_EXECUTORS = {
     "budget_calculator": budget_calculator_tool,
     "effect_analyzer": effect_analyzer_tool,
