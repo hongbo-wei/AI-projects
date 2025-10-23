@@ -1,0 +1,37 @@
+# Configuration for Advertising Agent MCP Project
+
+# Communication mode: stdio, sse, streamhttp
+mode: stdio
+
+# LLM Configuration
+llm:
+  provider: modelscope  # or anthropic, openai
+  model: qwen/Qwen3-30B-A3B
+  device: auto  # auto, cpu, cuda, mps
+  temperature: 0.7
+  max_tokens: 1000
+
+# Server Configuration
+server:
+  host: 127.0.0.1
+  port: 8000
+  # For SSE and streamhttp modes
+  sse_endpoint: /sse
+  streamhttp_endpoint: /stream
+
+# Client Configuration
+client:
+  timeout: 30
+  retry_attempts: 3
+
+# Advertising Tools Configuration
+tools:
+  budget_calculator:
+    enabled: true
+    default_currency: USD
+  effect_analyzer:
+    enabled: true
+    platforms: ["tiktok", "facebook", "google"]
+  compliance_checker:
+    enabled: true
+    regions: ["asia", "europe", "north_america"]

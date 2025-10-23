@@ -228,17 +228,17 @@ print(response[0]['generated_text'])
 ```mermaid
 flowchart LR
     %% 数据准备
-    A1[pretrain.txt<br/>无监督文本]:::data1
-    A2[sft.jsonl<br/>指令对话]:::data2
-    A3[rag.jsonl<br/>知识问答]:::data3
+    A1[pretrain.txt<br>无监督文本]:::data1
+    A2[sft.jsonl<br>指令对话]:::data2
+    A3[rag.jsonl<br>知识问答]:::data3
 
     %% 阶段
-    B[CPT 预训练<br/>BERT + MLM]:::stage
-    C[output/cpt/<br/>CPT模型]:::output
-    D[SFT 微调<br/>GPT-2 + 指令]:::stage
-    E[output/sft/<br/>SFT模型]:::output
-    F[RAG 检索增强<br/>RAG-sequence-nq]:::stage
-    G[output/rag/<br/>RAG模型]:::output
+    B[CPT 预训练<br>BERT + MLM]:::stage
+    C[output/cpt/<br>CPT模型]:::output
+    D[SFT 微调<br>GPT-2 + 指令]:::stage
+    E[output/sft/<br>SFT模型]:::output
+    F[RAG 检索增强<br>RAG-sequence-nq]:::stage
+    G[output/rag/<br>RAG模型]:::output
 
     %% 连接
     A1 --> B --> C --> D --> E --> F --> G
