@@ -181,9 +181,10 @@ python main.py agent
 ```
 
 The agent will start an interactive session where you can ask questions like:
-- "10万美元投东南亚TikTok广告，应该怎么分配预算？"
-- "分析Facebook广告效果，预算5000美元，目标受众是年轻人"
-- "检查这个广告文案在欧洲的合规性"
+
+- "How should a $100,000 budget be allocated for TikTok ads in Southeast Asia?"
+- "Analyze the performance of Facebook ads with a $5,000 budget, targeting young people."
+- "Check the compliance of this ad copy in Europe."
 
 ### Demo Mode
 
@@ -208,21 +209,27 @@ python main.py server --mode stdio
 python main.py agent
 ```
 
-3. Ask: "100000美元预算，投放东南亚TikTok和Facebook，持续30天，怎么分配？"
+3. Ask: "With a budget of $100,000, how to allocate it for TikTok and Facebook ads in Southeast Asia over a 30-day period?"
 
 Expected output: Budget allocation recommendations with platform breakdowns.
 
 ### Effect Analysis Test
 
-Ask: "分析TikTok广告效果，预算20000美元，目标受众是18-25岁年轻人，活动类型是品牌认知"
+Ask: "Analyze the performance of TikTok ads with a budget of $20,000, targeting young people aged 18-25, and the campaign type is brand awareness."
 
 Expected output: Performance metrics predictions (impressions, clicks, conversions, ROI).
 
 ### Compliance Check Test
 
-Ask: "检查这个广告'免费送货到家'在欧洲Facebook平台的合规性，目标受众是所有年龄段"
+Ask: "Check the compliance of the ad with the claim 'Free delivery to your door' on Facebook in Europe, where the target audience is all age groups."
 
 Expected output: Compliance status and recommendations.
+
+### VAR Image Generation Test
+
+Ask: "Please create an advertisement image for Southeast Asian summer promotions on TikTok. The specifications are as follows: size 1024x1024, copy: 'Limited-time Summer Discount', style: illustration."
+
+Expected output: An image (data URL or saved file path) and metadata including width, height, style, and a short caption. The agent should call the image tool (`var_image_tool`) in [mcp-agent/tools/ad_tools.py](mcp-agent/tools/ad_tools.py) to produce a placeholder SVG/data URL or a real image when available.
 
 ## Communication Modes
 
